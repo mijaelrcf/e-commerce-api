@@ -1,4 +1,5 @@
 using e_commerce_api.Data;
+using e_commerce_api.Services.CustomerService;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,9 +11,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//
+// Add service to connect SQL Server database
 builder.Services.AddDbContext<DataContext>(options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Add Dependency Injection to services
+builder.Services.AddScoped<ICustomerService, CustomerService>();
 
 var app = builder.Build();
 
